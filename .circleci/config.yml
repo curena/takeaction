@@ -53,3 +53,6 @@ jobs:
       - store_artifacts:
           path: build
           destination: build
+
+      - store_test_results:
+          path: test_results
