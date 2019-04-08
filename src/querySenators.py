@@ -10,13 +10,16 @@ class SenatorInfo:
         resp = urllib.request.urlopen(req)
         data = resp.read()
         
-        self.data = json.loads(data)
+        self.__data = json.loads(data)
     
     def getName(self, number):
-        return self.data["results"][number]["name"] 
+        if (self.__data["status"] == "OK"):
+            return self.__data["results"][number]["name"] 
 
     def getTwitter(self,number):
-        return self.data["results"][number]["twitter_id"]
+        if (self.__data["status"] == "OK"):
+            return self.__data["results"][number]["twitter_id"]
+
 
 if __name__ == "__main__":
     #Print Example
