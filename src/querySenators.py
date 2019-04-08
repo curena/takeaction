@@ -2,17 +2,28 @@ import urllib.request
 import config
 import json
 
-state = "TX"
+class SenatorInfo:
+    def __init__ (self,state):
+        url = "https://api.propublica.org/congress/v1/members/senate/" + state + "/current.json"
+    
+        req = urllib.request.Request(url, headers = config.headers)
+        resp = urllib.request.urlopen(req)
+        data = resp.read()
+        
+        self.data = json.loads(data)
+    
+    def getName(self, number):
+        return self.data["results"][number]["name"] 
 
-url = "https://api.propublica.org/congress/v1/members/senate/" + state + "/current.json"
+    def getTwitter(self,number):
+        return self.data["results"][number]["twitter_id"]
 
-req = urllib.request.Request(url, headers = config.headers)
-resp = urllib.request.urlopen(req)
-data = resp.read()
+if __name__ == "__main__":
+    #Print Example
+    state = "WY"
 
-#data = data.decode("utf-8")
-data = json.loads(data)
+    MySenators = SenatorInfo(state)
 
-print(state + " senators are " + data['results'][0]['name'] + " and " + data['results'][1]['name'] + ".")
+    print(state + " senators are " + MySenators.getName(0) + " and " + MySenators.getName(1)  + ".")
 
-print(type(data))
+    print(MySenators.getName(0) + " twitter handle is: " + MySenators.getTwitter(0))
