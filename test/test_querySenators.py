@@ -1,22 +1,13 @@
-import unittest
+import pytest
 from src.querySenators import SenatorInfo
-
-
-class test_SenatorInfo(unittest.TestCase):
-
-    def setUp(self):
-        self.testObj = SenatorInfo("TX")
+def test_getName():
+    testObj = SenatorInfo("TX")
+    assert testObj.getName(0) == "Ted Cruz"
+    assert testObj.getName(1) == "John Cornyn"
     
-    def tearDown(self):
-        pass
+    with pytest.raises(Exception):
+        testObj.getName(2)
 
-    def test_getName(self):
-        self.assertEqual(self.testObj.getName(0), 'Ted Cruz')
-        self.assertEqual(self.testObj.getName(1), 'John Cornyn')
-        #self.assertEqual(self.testObj.getName(2), '')
-
-    def test_getTwitter(self):      
-        self.assertEqual(self.testObj.getTwitter(0), 'SenTedCruz')
-
-if __name__ == "__main__":
-    unittest.main()
+def test_getTwitter():
+    testObj = SenatorInfo("TX") 
+    assert testObj.getTwitter(0) == "SenTedCruz"

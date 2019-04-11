@@ -1,6 +1,6 @@
-import unittest
+import pytest
 import os
 
-class test_environmentVariables(unittest.TestCase):
-    def test_APIKey(self):
-        self.assertIsNotNone(os.environ.get("SECRET_KEY"))
+def test_APIKey():
+    assert os.environ.get("SECRET_KEY") != None
+    assert os.environ.get("SECRUT_KEY") == None
